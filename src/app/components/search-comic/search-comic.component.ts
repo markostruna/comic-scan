@@ -4,6 +4,7 @@ import { BrowsingService } from 'src/app/_services/browsing.service';
 export interface Publisher {
   name: string;
   path: string;
+  class: string;
 }
 
 @Component({
@@ -24,7 +25,7 @@ export class SearchComicComponent implements OnInit {
 
   loadData(): void {
 
-    this.browsingService.getFiles('Publishers/').subscribe((data) => {
+    this.browsingService.getPublishers('Publishers/').subscribe((data) => {
       this.parsePublishers(data);
     });
 
@@ -34,18 +35,23 @@ export class SearchComicComponent implements OnInit {
 
     const arrayOfLines = text.match(/[^\r\n]+/g) ?? [];
 
-    const regex = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
+    const regex_folders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
+    const regex_files = /.*alt=\".*   .*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
 
     for (const line of arrayOfLines) {
 
-      const found = line.match(regex);
+      const found = line.match(regex_folders);
 
       if (found != null && found.length === 2) {
+
         const folder = decodeURI(found[1]).replace('%23', '#');
-        console.log(folder);
+
+        let classname = folder.toLowerCase().replace(/ /g, '-').replace(/č/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z');
+
         this.publishers.push({
           path: 'Publishers/' + found[1] + '/',
-          name: folder
+          name: folder,
+          class: classname
         });
       }
     }

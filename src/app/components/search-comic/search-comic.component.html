@@ -1,5 +1,3 @@
-    <div>
-      <ng-container *ngFor="let item of publishers" >
-        <a href="{{item.path}}">{{item.name}}</a><br>
-      </ng-container>
-    </div>
+    <app-publisher *ngFor="let item of publishers" [name]="item.name" [path]="item.path" [class]="item.class">
+    </app-publisher>
+    SSSSSSSSSSSSSSSSS

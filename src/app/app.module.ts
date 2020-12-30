@@ -6,18 +6,28 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComicComponent } from './components/search-comic/search-comic.component';
+import { PublisherComponent } from './components/publisher/publisher.component';
+import { PublisherListComponent } from './components/publisher-list/publisher-list.component';
+import { MaterialModule } from './app-material/app-material.module';
+import { ComicListComponent } from './components/comic-list/comic-list.component';
+import { ComicComponent } from './components/comic/comic.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComicComponent
+    SearchComicComponent,
+    PublisherComponent,
+    PublisherListComponent,
+    ComicListComponent,
+    ComicComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
