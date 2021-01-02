@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Comic } from 'src/app/_models/comic.model';
+import { ComicDetailsDialogComponent } from '../comic-details-dialog/comic-details-dialog.component';
 
 @Component({
   selector: 'app-comic',
@@ -20,7 +22,7 @@ export class ComicComponent implements OnInit {
     publisher: ''
   };
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -40,7 +42,8 @@ export class ComicComponent implements OnInit {
 
     if (item.missing) {
       style = {
-        'background-image': 'linear-gradient(white, white), url("' + item.imagePath + '")'
+        'background-image': 'linear-gradient(white, white), url("' + item.imagePath + '")',
+        'background-blend-mode': 'saturation'
       };
     } else {
       style = {
@@ -49,5 +52,13 @@ export class ComicComponent implements OnInit {
     }
 
     return style;
+  }
+
+  openDialog() {
+    this.dialog.open(ComicDetailsDialogComponent, {
+      data: {
+        animal: 'lion'
+      }
+    });
   }
 }

@@ -27,10 +27,10 @@ export class PublisherComponent implements OnInit {
       return '';
     }
 
-    const publisherClass = this.helper.createClassFromTitle(path);
+    const publisherClass = this.helper.createClassFromTitle(path) + '.jpg';
 
     const style: object = {
-      'background-image': '../../../assets/' + publisherClass
+      'background-image': 'url("../../../assets/' + publisherClass + '")'
     };
 
     return style;

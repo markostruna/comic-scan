@@ -1,11 +1,4 @@
 .thumb {
-  width:150px;
-  height:230px;
-  margin:20px;
-}
-
-
-.rootlink {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: flex-end;
@@ -31,14 +24,9 @@
   background-repeat: no-repeat;
 }
 
-.missing {
-  /* background-image: linear-gradient(black, black), url(http://felix.si/17289-26939-large/top-cats-2021-koledar-30x30-gs.jpg); */
-  background-blend-mode: saturation;
-}
-
-.rootlink:hover {
+.thumb:hover {
   /* background-image: linear-gradient(white, white), url(http://felix.si/17289-26939-large/top-cats-2021-koledar-30x30-gs.jpg); */
-  background-blend-mode: darken;
+  background-blend-mode: darken !important;
   box-shadow: 0 0 32px rgba(0,0,0,.2);
   border: 0px solid yellow;
   transition: border 0.2s ease, background-color 0.5s ease, all 0.3s ease;
@@ -48,59 +36,6 @@
   box-sizing: border-box;
 }
 
-.logo {
-  background-size: contain;
-  background-position-x: 0;
-  background-position-y: -20px;
-  background-repeat: no-repeat;
-}
-
-.logo:hover {
-  background-position-y: 0px;
-}
-
-.logo:focus {
-  outline: 0;
-  color: #cc7b19 ;
-}
-
-.lunov-magnus-strip {
-  background: rgba(0,0,0,.45) url('../../../assets/LunovMagnusStrip.jpg');
-  background-size: contain;
-  background-position-x: 0;
-  background-position-y: -20px;
-  background-repeat: no-repeat;
-}
-
-.slobodna-dalmacija {
-  background: rgba(0,0,0,.45) url('../../../assets/SlobodnaDalmacija.jpg');
-  background-size: contain;
-  background-position-x: 0;
-  background-position-y: -20px;
-  background-repeat: no-repeat;
-}
-
-.veseli-cetvrtak {
-  background: rgba(0,0,0,.45) url('../../../assets/VeseliCetvrtak.jpg');
-  background-size: contain;
-  background-position-x: 0;
-  background-position-y: -20px;
-  background-repeat: no-repeat;
-}
-
-.zlatna-serija {
-  background: rgba(0,0,0,.45) url('../../../assets/ZlatnaSerija.jpg');
-  background-size: contain;
-  background-position-x: 0;
-  background-position-y: -20px;
-  background-repeat: no-repeat;
-}
-
 .comicinfo {
   background-color: rgba(0, 0, 0, 0.7);
-  transition: all 1.0s ease-in-out;
-}
-
-.comicinfo:hover {
-  transition: all 1.0s ease-in-out;
 }

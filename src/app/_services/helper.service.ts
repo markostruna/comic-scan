@@ -30,8 +30,6 @@ export class HelperService {
 
         const folder = decodeURI(found[1]).replace('%23', '#');
 
-        let classname = this.createClassFromTitle(folder);
-
         publishers.push({
           path: 'Publishers/' + found[1] + '/',
           name: folder

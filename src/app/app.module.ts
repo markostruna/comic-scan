@@ -11,6 +11,7 @@ import { PublisherListComponent } from './components/publisher-list/publisher-li
 import { MaterialModule } from './app-material/app-material.module';
 import { ComicListComponent } from './components/comic-list/comic-list.component';
 import { ComicComponent } from './components/comic/comic.component';
+import { ComicDetailsDialogComponent } from './components/comic-details-dialog/comic-details-dialog.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ComicComponent } from './components/comic/comic.component';
     PublisherComponent,
     PublisherListComponent,
     ComicListComponent,
-    ComicComponent
+    ComicComponent,
+    ComicDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
