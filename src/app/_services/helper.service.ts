@@ -40,7 +40,7 @@ export class HelperService {
     return publishers;
   }
 
-  parseComics(text: string, parentPath: string): Comic[] {
+  parseComics(text: string, parentPath: string, publisher: string): Comic[] {
 
     const comics:Comic[] = [];
 
@@ -97,8 +97,8 @@ export class HelperService {
         number: 0,
         path: path,
         title: '',
-        collection: '',
-        publisher: ''
+        collection: '  ',
+        publisher: publisher
       };
 
       tokens = filename.match(regexp_number_hero_number_title);

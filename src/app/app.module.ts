@@ -12,7 +12,7 @@ import { MaterialModule } from './app-material/app-material.module';
 import { ComicListComponent } from './components/comic-list/comic-list.component';
 import { ComicComponent } from './components/comic/comic.component';
 import { ComicDetailsDialogComponent } from './components/comic-details-dialog/comic-details-dialog.component';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { ComicDetailsDialogComponent } from './components/comic-details-dialog/c
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

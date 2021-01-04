@@ -1,0 +1,31 @@
+.dialog{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 40px;
+}
+.mat-dialog-content {
+  padding: 5px 24px 5px 5px;
+}
+.mat-dialog-title {
+  background-color: black;
+  color: white;
+}
+
+::ng-deep .mat-dialog-container {
+  background: black !important;
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgb(172, 165, 165) !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(172, 165, 165) !important;
+}
+
+.full-width {
+  width: 100%;
+}

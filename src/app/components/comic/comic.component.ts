@@ -54,10 +54,10 @@ export class ComicComponent implements OnInit {
     return style;
   }
 
-  openDialog() {
+  openDialog(item: Comic) {
     this.dialog.open(ComicDetailsDialogComponent, {
       data: {
-        animal: 'lion'
+        item: item
       }
     });
   }

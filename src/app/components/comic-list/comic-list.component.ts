@@ -16,6 +16,7 @@ export class ComicListComponent implements OnInit {
   comics: Comic[] = [];
 
   path = '';
+  publisher = "";
 
   constructor(
     private browsingService: BrowsingService,
@@ -27,6 +28,7 @@ export class ComicListComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.path = params['path'] || '';
+      this.publisher = params['publisher'] || '';
     });
 
     this.loadData();
@@ -34,7 +36,7 @@ export class ComicListComponent implements OnInit {
 
   loadData(): void {
     this.browsingService.getComics(environment.server + this.path).subscribe((data) => {
-      this.comics = this.helperService.parseComics(data, environment.server + this.path);
+      this.comics = this.helperService.parseComics(data, environment.server + this.path, this.publisher);
     });
 
   }

@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Comic } from 'src/app/_models/comic.model';
 
 export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
+  item: Comic;
 }
 
 @Component({

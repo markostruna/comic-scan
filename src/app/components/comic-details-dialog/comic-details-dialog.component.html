@@ -1,15 +1,46 @@
-<h1 mat-dialog-title>Favorite Animal</h1>
+<h1 mat-dialog-title>{{ data.item.filename }}</h1>
 <div mat-dialog-content>
-  My favorite animal is:
-  <ul>
-    <li>
-      <span *ngIf="data.animal === 'panda'">&#10003;</span> Panda
-    </li>
-    <li>
-      <span *ngIf="data.animal === 'unicorn'">&#10003;</span> Unicorn
-    </li>
-    <li>
-      <span *ngIf="data.animal === 'lion'">&#10003;</span> Lion
-    </li>
-  </ul>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
+    <div style="height:400px; width:300px">
+      <img src="{{data.item.imagePath}}" style="width:100%; height:100%">
+    </div>
+    <div fxLayout="column" style="width:300px">
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>HERO</mat-label>
+          <input matInput value="{{ data.item.hero }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>PUBLISHER</mat-label>
+          <input matInput value="{{ data.item.publisher }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>NUMBER</mat-label>
+          <input matInput value="{{ data.item.number }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>TITLE</mat-label>
+          <input matInput value="{{ data.item.title }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>COLLECTION</mat-label>
+          <input matInput value="{{ data.item.collection }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>MISSING</mat-label>
+          <input matInput value="{{ data.item.missing }}" readonly>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 </div>
