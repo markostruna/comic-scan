@@ -17,3 +17,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}

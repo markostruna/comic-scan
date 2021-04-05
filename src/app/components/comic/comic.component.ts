@@ -10,10 +10,11 @@ import { ComicDetailsDialogComponent } from '../comic-details-dialog/comic-detai
 })
 export class ComicComponent implements OnInit {
   @Input() item:Comic = {
-    comicTitle: '',
+//    comicTitle: '',
     filename: '',
     hero: '',
-    imagePath: '',
+    coverPath: '',
+    thumbnailPath: '',
     missing: false,
     number: 0,
     path: '',
@@ -21,6 +22,8 @@ export class ComicComponent implements OnInit {
     collection: '',
     publisher: ''
   };
+
+  hover = false;
 
   constructor(public dialog: MatDialog) { }
 
@@ -41,17 +44,55 @@ export class ComicComponent implements OnInit {
     let style: object = {};
 
     if (item.missing) {
-      style = {
-        'background-image': 'linear-gradient(white, white), url("' + item.imagePath + '")',
-        'background-blend-mode': 'saturation'
-      };
+
+      if (this.hover) {
+        style = {
+          'background-image': 'url("' + item.thumbnailPath + '")',
+          'transition': 'border 0.2s ease, background-color 0.5s ease, all 0.3s ease',
+          'border': '0px solid red'
+  //        'background-image': 'linear-gradient(white, white), url("' + item.thumbnailPath + '")',
+  //        'background-blend-mode': 'saturation'
+        };
+      } else {
+        style = {
+          'background-image': 'url("' + item.path + '")',
+          'transition': 'border 0.2s ease, background-color 0.5s ease, all 0.3s ease',
+  //        'background-image': 'linear-gradient(white, white), url("' + item.thumbnailPath + '")',
+  //        'background-blend-mode': 'saturation'
+          'border': '0px solid red'
+        };
+      }
     } else {
       style = {
-        'background-image': 'url("' + item.imagePath + '")'
+        'background-image': 'url("' + item.thumbnailPath + '")',
+        'border': '0px solid transparent'
       };
     }
 
     return style;
+  }
+
+  getClass(item: Comic): string {
+    if (item.missing)
+      return 'comic-missing-collection';
+
+    return 'comic-collection';
+  }
+
+  getInfoClass(item: Comic): string {
+
+    // if (item.missing)
+    //   return 'comicinfo-missing';
+
+    return '';
+  }
+
+  displayMissingBanner(item: Comic): boolean {
+
+    if (item.collection !== ' ' && item.collection !== '')
+      return false;
+
+    return item.missing;
   }
 
   openDialog(item: Comic) {

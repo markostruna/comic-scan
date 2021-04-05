@@ -65,8 +65,18 @@ export class HelperService {
     const regexp_number_hero_number_title = /([1-9,0]+) - (.*) #([1-9,0]+) - (.*)/;
     const regexp_number_hero_collection_number = /([1-9,0]+) - (.*) ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) #([1-9,0]+)/;
 
+    const regexp_hero_collection_number_title = /(.*) - ([Extra]+) - ([1-9,0]+) - (.*)/;
+
     const regexp_hero_dash_number_title = /(.*) - ([1-9,0]+) - (.*)/;
     const regexp_hero_number_title = /(.*) ([1-9,0]+) - (.*)/;
+
+    const regexp_01 = /(.*) - ([1-9,0]+) - (.*)/;
+    const regexp_02 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+) - (.*)/;
+    const regexp_021 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+)/;
+    const regexp_03 = /([1-9,0]+) - (.*) - (.*)/;
+    const regexp_04 = /([1-9,0]+) - (.*) - ([1-9,0]+) - (.*)/;
+    const regexp_05 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+) - (.*)/;
+    const regexp_051 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+)/;
 
     for (const line of arrayOfLines) {
 
@@ -89,24 +99,58 @@ export class HelperService {
       const extension = tokens[2];
 
       const newComic: Comic = {
-        comicTitle: '',
+//        comicTitle: '',
         filename: filename,
-        hero: '',
-        imagePath: parentPath + 'covers/' + originalFilename + '.jpg',
+        hero: 'MISSING',
+//        imagePath: parentPath + 'covers/' + originalFilename + '.jpg',
+        thumbnailPath: parentPath + 'Thumbnails/' + originalFilename + '.jpg',
+        coverPath: parentPath + 'Covers/' + originalFilename + '.jpg',
         missing: extension === 'jpg',
-        number: 0,
-        path: path,
-        title: '',
-        collection: '  ',
+        number: undefined,
+        seqNumber: undefined,
+        path: parentPath + path,
+        title: 'MISSING ' + filename,
+        collection: ' ',
         publisher: publisher
       };
 
-      tokens = filename.match(regexp_number_hero_number_title);
+      tokens = filename.match(regexp_05);
 
       if (tokens) {
 
         newComic.number = parseInt(tokens![1] || '0', 10);
         newComic.hero = tokens![2] || '';
+        newComic.collection = tokens[3] || '';
+        newComic.seqNumber = parseInt(tokens![4] || '0', 10);
+        newComic.title = tokens![5] || '';
+
+        comics.push(newComic);
+
+        continue;
+      }
+
+      tokens = filename.match(regexp_051);
+
+      if (tokens) {
+
+        newComic.number = parseInt(tokens![1] || '0', 10);
+        newComic.hero = tokens![2] || '';
+        newComic.collection = tokens[3] || '';
+        newComic.seqNumber = parseInt(tokens![4] || '0', 10);
+        newComic.title = ' ';
+
+        comics.push(newComic);
+
+        continue;
+      }
+
+      tokens = filename.match(regexp_04);
+
+      if (tokens) {
+
+        newComic.number = parseInt(tokens![1] || '0', 10);
+        newComic.hero = tokens![2] || '';
+        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
         newComic.title = tokens![4] || '';
 
         comics.push(newComic);
@@ -114,7 +158,7 @@ export class HelperService {
         continue;
       }
 
-      tokens = filename.match(regexp_number_hero_title);
+      tokens = filename.match(regexp_03);
 
       if (tokens) {
 
@@ -127,26 +171,40 @@ export class HelperService {
         continue;
       }
 
-      tokens = filename.match(regexp_number_hero_collection_number);
+      tokens = filename.match(regexp_02);
 
       if (tokens) {
 
-        newComic.number = parseInt(tokens![1] || '0', 10);
-        newComic.hero = tokens![2] || '';
-        newComic.title = '';
-        newComic.collection = tokens![3] + ' ' + tokens![4];
+        newComic.hero = tokens![1] || '';
+        newComic.collection = tokens[2] || '';
+        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
+        newComic.title = tokens![4] || '';
 
         comics.push(newComic);
 
         continue;
       }
 
-      tokens = filename.match(regexp_hero_dash_number_title);
+      tokens = filename.match(regexp_021);
 
       if (tokens) {
 
         newComic.hero = tokens![1] || '';
-        newComic.number = parseInt(tokens![2] || '0', 10);
+        newComic.collection = tokens[2] || '';
+        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
+        newComic.title = ' ';
+
+        comics.push(newComic);
+
+        continue;
+      }
+
+      tokens = filename.match(regexp_01);
+
+      if (tokens) {
+
+        newComic.hero = tokens![1] || '';
+        newComic.seqNumber = parseInt(tokens![2] || '0', 10);
         newComic.title = tokens![3] || '';
 
         comics.push(newComic);
@@ -154,18 +212,85 @@ export class HelperService {
         continue;
       }
 
-      tokens = filename.match(regexp_hero_number_title);
+      // tokens = filename.match(regexp_number_hero_number_title);
 
-      if (tokens) {
+      // if (tokens) {
 
-        newComic.hero = tokens![1] || '';
-        newComic.number = parseInt(tokens![2] || '0', 10);
-        newComic.title = tokens![3] || '';
+      //   newComic.number = parseInt(tokens![1] || '0', 10);
+      //   newComic.hero = tokens![2] || '';
+      //   newComic.title = tokens![4] || '';
 
-        comics.push(newComic);
+      //   comics.push(newComic);
 
-        continue;
-      }
+      //   continue;
+      // }
+
+      // tokens = filename.match(regexp_number_hero_title);
+
+      // if (tokens) {
+
+      //   newComic.number = parseInt(tokens![1] || '0', 10);
+      //   newComic.hero = tokens![2] || '';
+      //   newComic.title = tokens![3] || '';
+
+      //   comics.push(newComic);
+
+      //   continue;
+      // }
+
+      // tokens = filename.match(regexp_number_hero_collection_number);
+
+      // if (tokens) {
+
+      //   newComic.number = parseInt(tokens![1] || '0', 10);
+      //   newComic.hero = tokens![2] || '';
+      //   newComic.title = '';
+      //   newComic.collection = tokens![3] + ' ' + tokens![4];
+
+      //   comics.push(newComic);
+
+      //   continue;
+      // }
+
+      // tokens = filename.match(regexp_hero_collection_number_title);
+
+      // if (tokens) {
+
+      //   newComic.hero = tokens![1] || '';
+      //   newComic.collection = tokens![2] || '';
+      //   newComic.number = parseInt(tokens![3] || '0', 10);
+      //   newComic.title = tokens![4] || '';
+
+      //   comics.push(newComic);
+
+      //   continue;
+      // }
+
+      // tokens = filename.match(regexp_hero_dash_number_title);
+
+      // if (tokens) {
+
+      //   newComic.hero = tokens![1] || '';
+      //   newComic.number = parseInt(tokens![2] || '0', 10);
+      //   newComic.title = tokens![3] || '';
+
+      //   comics.push(newComic);
+
+      //   continue;
+      // }
+
+      // tokens = filename.match(regexp_hero_number_title);
+
+      // if (tokens) {
+
+      //   newComic.hero = tokens![1] || '';
+      //   newComic.number = parseInt(tokens![2] || '0', 10);
+      //   newComic.title = tokens![3] || '';
+
+      //   comics.push(newComic);
+
+      //   continue;
+      // }
 
       newComic.number = 0;
       newComic.hero = 'MISSING';

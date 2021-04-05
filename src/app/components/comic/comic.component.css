@@ -1,41 +1,104 @@
+.comicbox {
+  margin:5px;
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  padding-top: 20px;
+}
+
 .thumb {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
-  -ms-flex-pack: center;
-  justify-content: center;
-  float: left;
   width:150px;
   height:230px;
-  margin: 15px;
-  padding: 0px;
-  font-family: "Roboto";
-  font-size: 14px;
-  font-weight: 400;
-  text-align: center;
-  color: #fff;
-  background-color: rgba(0,0,0,.2);
-  /* box-shadow: 0 0 2px rgba(0,0,0,.35); */
-  border: 0px solid transparent;
   transition: all 1.0s ease-in-out;
-  /* background-image: url(http://felix.si/17289-26939-large/top-cats-2021-koledar-30x30-gs.jpg); */
-  background-size: contain;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .thumb:hover {
-  /* background-image: linear-gradient(white, white), url(http://felix.si/17289-26939-large/top-cats-2021-koledar-30x30-gs.jpg); */
-  background-blend-mode: darken !important;
+  background-color: rgba(0,0,0,.2);
+  background-blend-mode: darken;
   box-shadow: 0 0 32px rgba(0,0,0,.2);
-  border: 0px solid yellow;
   transition: border 0.2s ease, background-color 0.5s ease, all 0.3s ease;
 }
 
-*, :after, :before {
-  box-sizing: border-box;
+.comicinfo {
+  /* margin:2px; */
+  width: 150px;
+  /* height:110px; */
+  padding: 2px;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: normal;
+  word-break: normal;
+  color: white;
 }
 
-.comicinfo {
-  background-color: rgba(0, 0, 0, 0.7);
+.comicinfo-missing {
+  background: rgba(155, 0, 0, 0.8);
+}
+
+.comic-collection {
+  position: relative;
+  /* width: 196px; */
+  background-color: rgba(128, 255, 0, 0.8);
+  color: black;
+  border-radius: 5px;
+  /* background: rgba(0, 105, 0, 0.8);
+  color: white; */
+  text-align: center;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.comic-missing {
+  height: 2px;
+  width: 150px;
+  margin: 0px;
+  border-radius: 50%;
+  /* float: right; */
+  background: rgba(155, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+}
+
+.number-circle {
+  float: right;
+  background-color: steelblue;
+  color: black;
+  border-radius: 5px;
+  width:28px;
+  height:10px;
+  text-align: center;
+  margin-top: 5px;
+  margin-right: 5px;
+  line-height: 8px;
+}
+
+.number-circle2 {
+  float: right;
+  background-color: yellow;
+  color: black;
+  border-radius: 5px;
+  width:28px;
+  height:10px;
+  text-align: center;
+  margin-top: 5px;
+  margin-right: 5px;
+  line-height: 8px;
+}
+
+.number {
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+.hero {
+  color: deepskyblue;
+  font-size: 12px;
+}
+
+.title {
+  /* font-weight: bold; */
+  color: darkorange;
+  font-size: 12px;
+  /* margin-top: 5px; */
 }

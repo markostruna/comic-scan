@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>{{ data.item.filename }}</h1>
+<!-- <h2 mat-dialog-title>Details</h2> -->
 <div mat-dialog-content>
-  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="30px">
-    <div style="height:400px; width:300px">
-      <img src="{{data.item.imagePath}}" style="width:100%; height:100%">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+    <div style="max-height:400px; max-width:260px">
+      <img src="{{data.item.coverPath}}" style="width:100%; height:100%">
     </div>
-    <div fxLayout="column" style="width:300px">
+    <div fxLayout="column" style="width:250px; padding: 10px;">
       <div>
         <mat-form-field class="full-width">
           <mat-label>HERO</mat-label>
@@ -33,6 +33,12 @@
         <mat-form-field class="full-width">
           <mat-label>COLLECTION</mat-label>
           <input matInput value="{{ data.item.collection }}" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width">
+          <mat-label>PATH</mat-label>
+          <input matInput value="{{ data.item.filename }}" readonly>
         </mat-form-field>
       </div>
       <div>
