@@ -12,4 +12,5 @@ export interface Comic {
 //  imagePath1: string;
   thumbnailPath: string;
   coverPath: string;
+  hover?: boolean;
 }

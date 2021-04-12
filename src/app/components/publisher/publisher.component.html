@@ -1,3 +1,35 @@
-<div class="rootlink" [style]="getBackgroundImage(name)" (click)="openFolder(path, name)">
-  {{name}}
+<div fxLayout="row wrap">
+  <ng-container *ngFor="let item of comics">
+
+    <div class="comicbox" fxLayout="column" fxLayoutAlign="start center" >
+
+      <div class="thumb" [style]="getBackgroundImage(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false">
+        <div class="comic-missing" *ngIf="item.missing">
+          &nbsp;
+        </div>
+      </div>
+
+      <div class="comicinfo">
+        <ng-container *ngIf="item.number">
+          <div class="number-circle2">
+            <span class="number">
+              {{item.number}}
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="item.seqNumber">
+          <div  class="number-circle">
+            <span class="number">
+              {{item.seqNumber}}
+            </span>
+          </div>
+        </ng-container>
+        <div class="hero">{{item.hero}}</div>
+        <div class="title">{{item.title}}&nbsp;</div>
+        <div class="comic-collection" *ngIf="item.collection">
+          {{ item.collection }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

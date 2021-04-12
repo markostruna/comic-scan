@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ComicListComponent } from './components/comic-list/comic-list.component';
-import { PublisherListComponent } from './components/publisher-list/publisher-list.component';
+import { PublisherComponent } from './components/publisher/publisher.component';
+import { PublishersComponent } from './components/publishers/publishers.component';
 import { SearchComicComponent } from './components/search-comic/search-comic.component';
 
 const routes: Routes = [
-  { path: '', component: PublisherListComponent },
+  { path: '', component: PublishersComponent },
   { path: 'search', component: SearchComicComponent },
-  { path: 'publisher', component: ComicListComponent }
+  { path: 'publishers/:publisher', component: PublisherComponent },
 ];
 
 @NgModule({

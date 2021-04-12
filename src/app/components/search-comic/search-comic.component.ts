@@ -35,18 +35,18 @@ export class SearchComicComponent implements OnInit {
 
     const arrayOfLines = text.match(/[^\r\n]+/g) ?? [];
 
-    const regex_folders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
-    const regex_files = /.*alt=\".*   .*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
+    const regexFolders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
+    const regexFiles = /.*alt=\".*   .*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
 
     for (const line of arrayOfLines) {
 
-      const found = line.match(regex_folders);
+      const found = line.match(regexFolders);
 
       if (found != null && found.length === 2) {
 
         const folder = decodeURI(found[1]).replace('%23', '#');
 
-        let classname = folder.toLowerCase().replace(/ /g, '-').replace(/č/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z');
+        const classname = folder.toLowerCase().replace(/ /g, '-').replace(/č/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z');
 
         this.publishers.push({
           path: 'Publishers/' + found[1] + '/',

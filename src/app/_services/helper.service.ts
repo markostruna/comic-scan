@@ -12,7 +12,7 @@ export class HelperService {
 
   parsePublishers(text: string): Publisher[] {
 
-    const publishers:Publisher[] = [];
+    const publishers: Publisher[] = [];
 
     if (text === undefined) {
       return publishers;
@@ -20,11 +20,11 @@ export class HelperService {
 
     const arrayOfLines = text.match(/[^\r\n]+/g) ?? [];
 
-    const regex_folders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
+    const regexFolders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
 
     for (const line of arrayOfLines) {
 
-      const found = line.match(regex_folders);
+      const found = line.match(regexFolders);
 
       if (found != null && found.length === 2) {
 
@@ -42,7 +42,7 @@ export class HelperService {
 
   parseComics(text: string, parentPath: string, publisher: string): Comic[] {
 
-    const comics:Comic[] = [];
+    const comics: Comic[] = [];
 
     if (text === undefined) {
       return comics;
@@ -51,36 +51,36 @@ export class HelperService {
     // split input to single lines
     const arrayOfLines = text.match(/[^\r\n]+/g) ?? [];
 
-    //const regex_files = /.*alt=\".*[   |\[IMG\]].*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
+    // const regexFiles = /.*alt=\".*[   |\[IMG\]].*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
 
     // parse server output and display only contents of current folder
-    const regex_files = /<tr><td.*><img.*alt=\"\[[   |IMG]+\]\".*<\/td><td><a.*href=\"(.*)\">.*<\/a>.*<\/td>.*<\/tr>/;
+    const regexFiles = /<tr><td.*><img.*alt=\"\[[   |IMG]+\]\".*<\/td><td><a.*href=\"(.*)\">.*<\/a>.*<\/td>.*<\/tr>/;
 
     // filename and extension
-    const regexp_filename = /(.*)\.(.*)/;
+    const regexpFilename = /(.*)\.(.*)/;
 
     // number - hero - title
-    const regexp_number_hero_title = /([1-9,0]+) - (.*) - (.*)/;
+    const regexpNumberHeroTitle = /([1-9,0]+) - (.*) - (.*)/;
 
-    const regexp_number_hero_number_title = /([1-9,0]+) - (.*) #([1-9,0]+) - (.*)/;
-    const regexp_number_hero_collection_number = /([1-9,0]+) - (.*) ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) #([1-9,0]+)/;
+    const regexpNumberHeroNumberTitle = /([1-9,0]+) - (.*) #([1-9,0]+) - (.*)/;
+    const regexpNumberHeroCollectionNumber = /([1-9,0]+) - (.*) ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) #([1-9,0]+)/;
 
-    const regexp_hero_collection_number_title = /(.*) - ([Extra]+) - ([1-9,0]+) - (.*)/;
+    const regexpHeroCollectionNumberTitle = /(.*) - ([Extra]+) - ([1-9,0]+) - (.*)/;
 
-    const regexp_hero_dash_number_title = /(.*) - ([1-9,0]+) - (.*)/;
-    const regexp_hero_number_title = /(.*) ([1-9,0]+) - (.*)/;
+    const regexpHeroDashNumberTitle = /(.*) - ([1-9,0]+) - (.*)/;
+    const regexpHeroNumberTitle = /(.*) ([1-9,0]+) - (.*)/;
 
-    const regexp_01 = /(.*) - ([1-9,0]+) - (.*)/;
-    const regexp_02 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+) - (.*)/;
-    const regexp_021 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+)/;
-    const regexp_03 = /([1-9,0]+) - (.*) - (.*)/;
-    const regexp_04 = /([1-9,0]+) - (.*) - ([1-9,0]+) - (.*)/;
-    const regexp_05 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+) - (.*)/;
-    const regexp_051 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+)/;
+    const regexp01 = /(.*) - ([1-9,0]+) - (.*)/;
+    const regexp02 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+) - (.*)/;
+    const regexp021 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+)/;
+    const regexp03 = /([1-9,0]+) - (.*) - (.*)/;
+    const regexp04 = /([1-9,0]+) - (.*) - ([1-9,0]+) - (.*)/;
+    const regexp05 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+) - (.*)/;
+    const regexp051 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+)/;
 
     for (const line of arrayOfLines) {
 
-      let tokens = line.match(regex_files);
+      let tokens = line.match(regexFiles);
 
       if (tokens === null || tokens.length !== 2) {
         continue;
@@ -88,7 +88,7 @@ export class HelperService {
 
       const path = tokens[1];
 
-      tokens = path.match(regexp_filename);
+      tokens = path.match(regexpFilename);
 
       if (tokens === null || tokens.length !== 3) {
         continue;
@@ -100,7 +100,7 @@ export class HelperService {
 
       const newComic: Comic = {
 //        comicTitle: '',
-        filename: filename,
+        filename,
         hero: 'MISSING',
 //        imagePath: parentPath + 'covers/' + originalFilename + '.jpg',
         thumbnailPath: parentPath + 'Thumbnails/' + originalFilename + '.jpg',
@@ -111,32 +111,32 @@ export class HelperService {
         path: parentPath + path,
         title: 'MISSING ' + filename,
         collection: ' ',
-        publisher: publisher
+        publisher
       };
 
-      tokens = filename.match(regexp_05);
+      tokens = filename.match(regexp05);
 
       if (tokens) {
 
-        newComic.number = parseInt(tokens![1] || '0', 10);
-        newComic.hero = tokens![2] || '';
-        newComic.collection = tokens[3] || '';
-        newComic.seqNumber = parseInt(tokens![4] || '0', 10);
-        newComic.title = tokens![5] || '';
+        newComic.number = (tokens[1] !== undefined) ? parseInt(tokens[1], 10) : undefined;
+        newComic.hero = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.collection = (tokens[3] !== undefined) ? tokens[3] : '';
+        newComic.seqNumber = (tokens[4] !== undefined) ? parseInt(tokens[4], 10) : undefined;
+        newComic.title = (tokens[5] !== undefined) ? tokens[5] : '';
 
         comics.push(newComic);
 
         continue;
       }
 
-      tokens = filename.match(regexp_051);
+      tokens = filename.match(regexp051);
 
       if (tokens) {
 
-        newComic.number = parseInt(tokens![1] || '0', 10);
-        newComic.hero = tokens![2] || '';
-        newComic.collection = tokens[3] || '';
-        newComic.seqNumber = parseInt(tokens![4] || '0', 10);
+        newComic.number = (tokens[1] !== undefined) ? parseInt(tokens[1], 10) : undefined;
+        newComic.hero = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.collection = (tokens[3] !== undefined) ? tokens[3] : '';
+        newComic.seqNumber = (tokens[4] !== undefined) ? parseInt(tokens[4], 10) : undefined;
         newComic.title = ' ';
 
         comics.push(newComic);
@@ -144,54 +144,54 @@ export class HelperService {
         continue;
       }
 
-      tokens = filename.match(regexp_04);
+      tokens = filename.match(regexp04);
 
       if (tokens) {
 
-        newComic.number = parseInt(tokens![1] || '0', 10);
-        newComic.hero = tokens![2] || '';
-        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
-        newComic.title = tokens![4] || '';
+        newComic.number = (tokens[1] !== undefined) ? parseInt(tokens[1], 10) : undefined;
+        newComic.hero = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.seqNumber = (tokens[3] !== undefined) ? parseInt(tokens[3], 10) : undefined;
+        newComic.title = (tokens[4] !== undefined) ? tokens[4] : '';
 
         comics.push(newComic);
 
         continue;
       }
 
-      tokens = filename.match(regexp_03);
+      tokens = filename.match(regexp03);
 
       if (tokens) {
 
-        newComic.number = parseInt(tokens![1] || '0', 10);
-        newComic.hero = tokens![2] || '';
-        newComic.title = tokens![3] || '';
+        newComic.number = (tokens[1] !== undefined) ? parseInt(tokens[1], 10) : undefined;
+        newComic.hero = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.title = (tokens[3] !== undefined) ? tokens[3] : '';
 
         comics.push(newComic);
 
         continue;
       }
 
-      tokens = filename.match(regexp_02);
+      tokens = filename.match(regexp02);
 
       if (tokens) {
 
-        newComic.hero = tokens![1] || '';
-        newComic.collection = tokens[2] || '';
-        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
-        newComic.title = tokens![4] || '';
+        newComic.hero = (tokens[1] !== undefined) ? tokens[1] : '';
+        newComic.collection = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.seqNumber = (tokens[3] !== undefined) ? parseInt(tokens[3], 10) : undefined;
+        newComic.title = (tokens[4] !== undefined) ? tokens[4] : '';
 
         comics.push(newComic);
 
         continue;
       }
 
-      tokens = filename.match(regexp_021);
+      tokens = filename.match(regexp021);
 
       if (tokens) {
 
-        newComic.hero = tokens![1] || '';
-        newComic.collection = tokens[2] || '';
-        newComic.seqNumber = parseInt(tokens![3] || '0', 10);
+        newComic.hero = (tokens[1] !== undefined) ? tokens[1] : '';
+        newComic.collection = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.seqNumber = (tokens[3] !== undefined) ? parseInt(tokens[3], 10) : undefined;
         newComic.title = ' ';
 
         comics.push(newComic);
@@ -199,13 +199,13 @@ export class HelperService {
         continue;
       }
 
-      tokens = filename.match(regexp_01);
+      tokens = filename.match(regexp01);
 
       if (tokens) {
 
-        newComic.hero = tokens![1] || '';
-        newComic.seqNumber = parseInt(tokens![2] || '0', 10);
-        newComic.title = tokens![3] || '';
+        newComic.hero = (tokens[1] !== undefined) ? tokens[1] : '';
+        newComic.seqNumber = (tokens[2] !== undefined) ? parseInt(tokens[2], 10) : undefined;
+        newComic.title = (tokens[3] !== undefined) ? tokens[3] : '';
 
         comics.push(newComic);
 
@@ -302,10 +302,10 @@ export class HelperService {
     return comics;
   }
 
-  createClassFromTitle(input: string):string {
+  createClassFromTitle(input: string): string {
 
     if (input === undefined) {
-      return "";
+      return '';
     }
 
     return input.toLowerCase().replace(/ /g, '-').replace(/č/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z');
