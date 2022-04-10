@@ -43,3 +43,14 @@
 *, :after, :before {
   box-sizing: border-box;
 }
+
+.title {
+  font-family: "Roboto";
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  text-transform: none;
+  line-height: 1.4;
+  color: #fff;
+  margin: 15px;
+}

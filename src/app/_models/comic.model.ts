@@ -1,4 +1,5 @@
 export interface Comic {
+  id: string;
   missing: boolean;
   publisher?: string;
   number?: number;
@@ -11,6 +12,8 @@ export interface Comic {
   path: string;
 //  imagePath1: string;
   thumbnailPath: string;
+  comicImage: string;
   coverPath: string;
   hover?: boolean;
+  currentBackgroundImage?: string;
 }

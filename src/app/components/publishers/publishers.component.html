@@ -1,6 +1,8 @@
 <!-- <app-publisher *ngFor="let item of publishers" [name]="item.name" [path]="item.path">
 </app-publisher> -->
-
+<div class="title">
+  Publishers
+</div>
 <div *ngFor="let item of publishers" class="rootlink" [style]="getBackgroundImage(item.name)" (click)="openFolder(item.path, item.name)">
   {{item.name}}
 </div>

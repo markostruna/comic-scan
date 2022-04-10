@@ -1,35 +1,35 @@
+<div class="title">
+  {{this.publisher}}
+</div>
 <div fxLayout="row wrap">
-  <ng-container *ngFor="let item of comics">
+  <div class="comicbox" fxLayout="column" fxLayoutAlign="start center" *ngFor="let item of comics2">
 
-    <div class="comicbox" fxLayout="column" fxLayoutAlign="start center" >
-
-      <div class="thumb" [style]="getBackgroundImage(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false">
+    <div style="width:150px; height:230px; background-color: black; ">
+      <!-- <div *appInView [id]="item.id" class="thumb"  [style]="getStyle(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -->
+        <div *appInView [id]="item.id" class="thumb" [attr.klodvik]="setBackgroundImage(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false">
+      <!-- <div *appInView class="thumb"  [style]="getStyle(item)"       [style.background-image]="getBackgroundImage(item)"              (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -->
         <div class="comic-missing" *ngIf="item.missing">
           &nbsp;
         </div>
       </div>
+    </div>
 
-      <div class="comicinfo">
-        <ng-container *ngIf="item.number">
-          <div class="number-circle2">
-            <span class="number">
-              {{item.number}}
-            </span>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="item.seqNumber">
-          <div  class="number-circle">
-            <span class="number">
-              {{item.seqNumber}}
-            </span>
-          </div>
-        </ng-container>
-        <div class="hero">{{item.hero}}</div>
-        <div class="title">{{item.title}}&nbsp;</div>
-        <div class="comic-collection" *ngIf="item.collection">
-          {{ item.collection }}
-        </div>
+    <div class="comicinfo">
+      <div class="number-circle2" *ngIf="item.number">
+        <span class="number">
+          {{item.number}}
+        </span>
+      </div>
+      <div  class="number-circle" *ngIf="item.seqNumber">
+        <span class="number">
+          {{item.seqNumber}}
+        </span>
+      </div>
+      <div class="hero">{{item.hero}}</div>
+      <div class="title">{{item.title}}&nbsp;</div>
+      <div class="comic-collection" *ngIf="item.collection">
+        {{ item.collection }}
       </div>
     </div>
-  </ng-container>
+  </div>
 </div>

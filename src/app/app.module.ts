@@ -11,6 +11,7 @@ import { MaterialModule } from './app-material/app-material.module';
 import { PublisherComponent } from './components/publisher/publisher.component';
 import { ComicDetailsDialogComponent } from './components/comic-details-dialog/comic-details-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { InViewDirective } from './in-view.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SearchComicComponent,
     PublishersComponent,
     PublisherComponent,
-    ComicDetailsDialogComponent
+    ComicDetailsDialogComponent,
+    InViewDirective
   ],
   imports: [
     BrowserModule,

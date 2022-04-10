@@ -71,12 +71,16 @@ export class HelperService {
     const regexpHeroNumberTitle = /(.*) ([1-9,0]+) - (.*)/;
 
     const regexp01 = /(.*) - ([1-9,0]+) - (.*)/;
-    const regexp02 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+) - (.*)/;
-    const regexp021 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+)/;
+    const regexp02 = /(.*) - (.*) - ([1-9,0]+) - (.*)/;
+    // const regexp02 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+) - (.*)/;
+    const regexp021 = /(.*) - (.*) - ([1-9,0]+)/;
+    // const regexp021 = /(.*) - ([Biblioteka|Superbook|'Kolekcionarsko Izdanje'|Extra]+) - ([1-9,0]+)/;
     const regexp03 = /([1-9,0]+) - (.*) - (.*)/;
     const regexp04 = /([1-9,0]+) - (.*) - ([1-9,0]+) - (.*)/;
     const regexp05 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+) - (.*)/;
     const regexp051 = /([1-9,0]+) - (.*) - (.*) - ([1-9,0]+)/;
+
+    let index = 0;
 
     for (const line of arrayOfLines) {
 
@@ -95,7 +99,7 @@ export class HelperService {
       }
 
       const originalFilename = (tokens[1]);
-      const filename = decodeURI(tokens[1]).replace('%23', '#');
+      const filename = decodeURI(tokens[1]).replace('%23', '#').replace('&amp;', '&');
       const extension = tokens[2];
 
       const newComic: Comic = {
@@ -104,6 +108,7 @@ export class HelperService {
         hero: 'MISSING',
 //        imagePath: parentPath + 'covers/' + originalFilename + '.jpg',
         thumbnailPath: parentPath + 'Thumbnails/' + originalFilename + '.jpg',
+        comicImage: extension === 'jpg' ?  (parentPath + path) : (parentPath + 'Thumbnails/' + originalFilename + '.jpg'),
         coverPath: parentPath + 'Covers/' + originalFilename + '.jpg',
         missing: extension === 'jpg',
         number: undefined,
@@ -111,7 +116,8 @@ export class HelperService {
         path: parentPath + path,
         title: 'MISSING ' + filename,
         collection: ' ',
-        publisher
+        publisher,
+        id: 'comic-' + (index++)
       };
 
       tokens = filename.match(regexp05);
@@ -150,6 +156,20 @@ export class HelperService {
 
         newComic.number = (tokens[1] !== undefined) ? parseInt(tokens[1], 10) : undefined;
         newComic.hero = (tokens[2] !== undefined) ? tokens[2] : '';
+        newComic.seqNumber = (tokens[3] !== undefined) ? parseInt(tokens[3], 10) : undefined;
+        newComic.title = (tokens[4] !== undefined) ? tokens[4] : '';
+
+        comics.push(newComic);
+
+        continue;
+      }
+
+      tokens = filename.match(regexp02);
+
+      if (tokens) {
+
+        newComic.hero = (tokens[1] !== undefined) ? tokens[1] : '';
+        newComic.collection = (tokens[2] !== undefined) ? tokens[2] : '';
         newComic.seqNumber = (tokens[3] !== undefined) ? parseInt(tokens[3], 10) : undefined;
         newComic.title = (tokens[4] !== undefined) ? tokens[4] : '';
 

@@ -8,9 +8,15 @@
   width:150px;
   height:230px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   transition: border 0.2s ease, background-color 0.5s ease, all 0.3s ease;
   border: 0;
+}
+
+.loading {
+  background-image: url('/assets/spinner.gif');
+  background-position: center !important;
+  background-size: cover !important;
 }
 
 .thumb:hover {
@@ -104,4 +110,12 @@
   color: darkorange;
   font-size: 12px;
   /* margin-top: 5px; */
+  font-family: "Roboto";
+  font-size: 18px;
+  font-weight: 400;
+  text-align: left;
+  text-transform: none;
+  line-height: 1.4;
+  color: #fff;
+  margin: 15px;
 }
