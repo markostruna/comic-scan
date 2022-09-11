@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server: 'proxy/'
+  server: 'proxy/',
+  assetPath: '../../../assets/'
 };
 
 /*

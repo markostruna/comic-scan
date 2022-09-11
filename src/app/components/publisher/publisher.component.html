@@ -1,17 +1,36 @@
-<div class="title">
-  {{this.publisher}}
-</div>
+<!-- <div class="pager" fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="15px">
+  <div class="pagerItem" (click)="goToPreviousPage()">
+    Previous
+  </div>
+  <div>
+    {{ pageNumber }} / {{ numPages }}
+  </div>
+  <div class="pagerItem" (click)="goToNextPage()">
+    Next
+  </div>
+</div> -->
 <div fxLayout="row wrap">
-  <div class="comicbox" fxLayout="column" fxLayoutAlign="start center" *ngFor="let item of comics2">
+  <div class="comicbox" fxLayout="column" fxLayoutAlign="start center" *ngFor="let item of displayedComics">
 
     <div style="width:150px; height:230px; background-color: black; ">
-      <!-- <div *appInView [id]="item.id" class="thumb"  [style]="getStyle(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -->
+      <!-- <div *appInView [id]="item.id" class="thumb"  [style]="getStyle(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false">
         <div *appInView [id]="item.id" class="thumb" [attr.klodvik]="setBackgroundImage(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false">
-      <!-- <div *appInView class="thumb"  [style]="getStyle(item)"       [style.background-image]="getBackgroundImage(item)"              (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -->
+      <! -- <div *appInView class="thumb"  [style]="getStyle(item)"       [style.background-image]="getBackgroundImage(item)"              (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -- >
         <div class="comic-missing" *ngIf="item.missing">
           &nbsp;
         </div>
-      </div>
+      </div> -->
+
+      <!-- <ng-container *ngIf="!item.missing"> -->
+        <img [id]="item.id" [ngClass]="item.class" [src]="item.thumbnailPath" (click)="openDialog(item)" loading="lazy">
+          <!-- <div *appInView [id]="item.id" class="thumb" [attr.klodvik]="setBackgroundImage(item)" (click)="openDialog(item)" (mouseover)="item.hover=true" (mouseleave)="item.hover=false"> -->
+                  <!-- </ng-container>
+
+      <ng-container *ngIf="item.missing">
+        <div [id]="item.id" class="thumb missing" [style.background-image]="item.style" (click)="openDialog(item)">
+        </div>
+      </ng-container> -->
+
     </div>
 
     <div class="comicinfo">
@@ -26,10 +45,10 @@
         </span>
       </div>
       <div class="hero">{{item.hero}}</div>
-      <div class="title">{{item.title}}&nbsp;</div>
       <div class="comic-collection" *ngIf="item.collection">
         {{ item.collection }}
       </div>
+      <div class="title">{{item.title}}</div>
     </div>
   </div>
 </div>

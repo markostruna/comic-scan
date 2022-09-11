@@ -1,19 +1,9 @@
 export interface Comic {
-  id: string;
+//  id: string;
   missing: boolean;
-  publisher?: string;
-  number?: number;
-  seqNumber?: number;
-  title: string;
-  hero: string;
-  collection?: string;
-//  comicTitle: string;
   filename: string;
+  originalFilename: string,
+  extension: string,
   path: string;
-//  imagePath1: string;
-  thumbnailPath: string;
-  comicImage: string;
-  coverPath: string;
-  hover?: boolean;
-  currentBackgroundImage?: string;
+  publisher: string,
 }

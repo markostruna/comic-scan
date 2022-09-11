@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PublisherComponent } from './components/publisher/publisher.component';
+import { PublishersComponent } from './components/publishers/publishers.component';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +11,47 @@ import { Component, OnInit } from '@angular/core';
 
 export class AppComponent implements OnInit {
 
-  title = 'comic';
+  title = 'Comic collection';
   value = 'Clear me';
+  publisher?: string = '';
 
-  constructor() {}
+  subscriptions: Subscription[] = [];
+
+  constructor(public cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
   }
 
+  subscribeToEvent(component: any) {
+
+    if (component instanceof PublishersComponent) {
+      const child: PublishersComponent = component;
+
+      // this.subscriptions.push(child.submitter.subscribe((publisher: string) => {
+        this.publisher = undefined;
+      // }));
+      this.cdr.detectChanges();
+
+      return;
+    }
+
+    if (component instanceof PublisherComponent) {
+      const child: PublisherComponent = component;
+
+      this.subscriptions.push(child.submitter.subscribe((publisher: string) => {
+        this.publisher = publisher;
+      }));
+
+      this.cdr.detectChanges();
+
+      return;
+    }
+
+  }
+
+  unsubscribeEvent(component: PublishersComponent) {
+    this.subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    })
+  }
 }

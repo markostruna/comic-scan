@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Publisher } from 'src/app/_models/publisher.model';
-import { BrowsingService } from 'src/app/_services/browsing.service';
-import { HelperService } from 'src/app/_services/helper.service';
-import { environment } from 'src/environments/environment';
+import { PublisherResolved } from 'src/app/_models/models';
+import { ComicService } from 'src/app/_services/comic.service';
 
 @Component({
   selector: 'app-publishers',
@@ -13,47 +11,29 @@ import { environment } from 'src/environments/environment';
 
 export class PublishersComponent implements OnInit {
 
-  publishers: Publisher[] = [];
+  submitter = new EventEmitter();
+
+  publishersFolder = 'Publishers/';
+  publishers: PublisherResolved[] = [];
 
   constructor(
     private router: Router,
-    private browsingService: BrowsingService,
-    private helperService: HelperService
+    private comicService: ComicService
   ) { }
 
   ngOnInit(): void {
     this.loadData();
+    this.submitter.emit();
   }
 
   loadData(): void {
-    console.log('Server: ', environment.server);
-    this.browsingService.getPublishers(environment.server + 'Publishers/').subscribe((data) => {
-      this.publishers = this.helperService.parsePublishers(data);
-    });
+    this.comicService.getPublishers(this.publishersFolder).subscribe((data) => {
+      this.publishers = data;
+    })
   }
 
   openFolder(path: string, name: string): void {
+    console.log('Path: ', path, ' Name: ', name);
     this.router.navigate(['/publishers/' + name]);
-  }
-
-  getBackgroundImage(path: string): object {
-
-    if (!path) {
-      return {};
-    }
-
-    let assetPath = '../../../assets/';
-
-    if (environment.production) {
-      assetPath = './assets/';
-    }
-
-    const publisherClass = this.helperService.createClassFromTitle(path) + '.jpg';
-
-    const style: object = {
-      'background-image': 'url("' + assetPath + publisherClass + '")'
-    };
-
-    return style;
   }
 }

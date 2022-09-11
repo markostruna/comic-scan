@@ -12,10 +12,14 @@
 
   {{ title }}
 
+  <ng-container *ngIf="publisher">
+    / {{ publisher }}
+  </ng-container>
+
 </div>
 
 <div class="content" role="main">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="subscribeToEvent($event)" (deactivate)="unsubscribeEvent($event)"></router-outlet>
 </div>
 
 

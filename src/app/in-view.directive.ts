@@ -1,9 +1,11 @@
-import { Directive, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[appInView]'
 })
 export class InViewDirective {
+  @Input() url='';
+
   alreadyRendered: boolean = false; // cheking if visible already
 
   constructor(
