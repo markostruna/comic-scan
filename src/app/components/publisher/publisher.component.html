@@ -31,7 +31,11 @@
         </div>
       </ng-container> -->
 
-      <div class="comic-collection" *ngIf="item.collection" style="position: absolute; left:0; top: 0px; right: 0; rotate: 45;">
+      <div class="comic-publisher" *ngIf="this.displayPublisher" style="position: absolute; left:0; bottom: 0px; right: 0;">
+        {{ item.publisher }}
+      </div>
+
+      <div class="comic-collection" *ngIf="item.collection" style="position: absolute; left:0; top: 0px; right: 0;">
         {{ item.collection }}
       </div>
     </div>

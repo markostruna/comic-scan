@@ -12,6 +12,7 @@ import { PublisherComponent } from './components/publisher/publisher.component';
 import { ComicDetailsDialogComponent } from './components/comic-details-dialog/comic-details-dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InViewDirective } from './in-view.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { InViewDirective } from './in-view.directive';
     HttpClientModule,
     MaterialModule,
     FlexLayoutModule,
+    FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BrowsingService } from 'src/app/_services/browsing.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ComicResolved } from 'src/app/_models/comic-resolved.model';
+import { ComicService } from 'src/app/_services/comic.service';
+import { PublisherComponent } from '../publisher/publisher.component';
 
 export interface Publisher {
   name: string;
@@ -15,45 +18,52 @@ export interface Publisher {
 
 export class SearchComicComponent implements OnInit {
 
-  publishers: Publisher[] = [];
+  @ViewChild('searchResults')
+  searchResults!: PublisherComponent;
 
-  constructor(private browsingService: BrowsingService) { }
+  comics: ComicResolved[] = [];
+
+  form = this.fb.group({
+    hero: [''],
+    title: [''],
+  });
+
+  constructor(private comicService: ComicService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
-  loadData(): void {
+  searchComics() {
+    this.comics = [];
 
-    this.browsingService.getPublishers('Publishers/').subscribe((data) => {
-      this.parsePublishers(data);
-    });
+    const selectedTitle = (this.form.get('title')?.value ?? '').toLowerCase();
+    const selectedHero = (this.form.get('hero')?.value ?? '').toLowerCase();
 
-  }
+    this.comicService.getPublishers('Publishers/', false).subscribe((data) => {
 
-  parsePublishers(text: string): void {
+      const publishers = data;
 
-    const arrayOfLines = text.match(/[^\r\n]+/g) ?? [];
+      publishers.forEach((publisher) => {
+        this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
 
-    const regexFolders = /.*alt=\"\[DIR\]\".*<a href=\"(.*)\/\"\>.*\<\/a\>.*/;
-    const regexFiles = /.*alt=\".*   .*\".*<a.*href=\"(.*)\">.*<\/a>.*<\/td>.*/;
+          data.forEach((comic) => {
 
-    for (const line of arrayOfLines) {
+            const hero2 = comic.hero2 ?? '';
+            if (comic.hero.toLowerCase().indexOf(selectedHero) < 0 && hero2.toLowerCase().indexOf(selectedHero) < 0) {
+              return;
+            }
 
-      const found = line.match(regexFolders);
+            const title2 = comic.title2 ?? '';
+            if (comic.title.toLowerCase().indexOf(selectedTitle) < 0 && title2.toLowerCase().indexOf(selectedTitle) < 0) {
+              return;
+            }
 
-      if (found != null && found.length === 2) {
+            this.comics = this.comics.concat(comic);
+          })
+          this.searchResults.displayComics();
 
-        const folder = decodeURI(found[1]).replace('%23', '#');
-
-        const classname = folder.toLowerCase().replace(/ /g, '-').replace(/č/g, 'c').replace(/š/g, 's').replace(/ž/g, 'z');
-
-        this.publishers.push({
-          path: 'Publishers/' + found[1] + '/',
-          name: folder,
-          class: classname
-        });
-      }
-    }
+        })
+      })
+    })
   }
 }

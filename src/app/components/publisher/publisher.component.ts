@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ComicResolved } from 'src/app/_models/models';
@@ -12,6 +12,9 @@ import { environment } from 'src/environments/environment';
 })
 
 export class PublisherComponent implements OnInit {
+
+  @Input() comicsInput:ComicResolved[] = [];
+  @Input() displayPublisher: boolean = false;
 
   environment = environment;
   submitter = new EventEmitter();
@@ -41,8 +44,18 @@ export class PublisherComponent implements OnInit {
     this.publisher = this.route.snapshot?.params?.publisher;
     this.comicsPath = 'Publishers/' + this.route.snapshot?.params?.publisher + '/';
 
-    this.loadData();
-    this.submitter.emit(this.publisher);
+    if (this.comicsInput?.length > 0) {
+      this.comics = this.comicsInput;
+      this.displayedComics = this.comics.slice(0, this.numPreloadedComics);
+    } else if (this.publisher != null) {
+      this.loadData();
+      this.submitter.emit(this.publisher);
+    }
+  }
+
+  displayComics():void {
+    this.comics = this.comicsInput;
+    this.displayedComics = this.comics.slice(0, this.numPreloadedComics);
   }
 
   loadData(): void {
