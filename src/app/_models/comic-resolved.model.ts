@@ -5,6 +5,8 @@ export interface ComicResolved extends Comic {
   seqNumber?: number;
   title: string;
   hero: string;
+  title2?: string;
+  hero2?: string;
   collection?: string;
   thumbnailPath: string;
   currentBackgroundImage: string;

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ComicResolved } from 'src/app/_models/models';
 import { ComicService } from 'src/app/_services/comic.service';
 import { ComicDetailsDialogComponent } from '../comic-details-dialog/comic-details-dialog.component';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-publisher',
   templateUrl: './publisher.component.html',
@@ -13,6 +13,7 @@ import { ComicDetailsDialogComponent } from '../comic-details-dialog/comic-detai
 
 export class PublisherComponent implements OnInit {
 
+  environment = environment;
   submitter = new EventEmitter();
 
   im: Boolean[] = [];

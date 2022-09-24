@@ -70,10 +70,21 @@ export class ComicService {
       name: 'title',
       type: this.fieldTypes.string
     },
+    hero2: {
+      regExp: '(.*)',
+      name: 'hero2',
+      type: this.fieldTypes.string
+    },
+    title2: {
+      regExp: '(.*)',
+      name: 'title2',
+      type: this.fieldTypes.string
+    },
   };
 
   filenameMatchConfigurations: filenameMatchConfig[] = [
     { fields: ['number', 'hero', 'collection', 'seqNumber', 'title'] },
+    { fields: ['number', 'hero', 'title', 'hero2', 'title2'] },
     { fields: ['number', 'hero', 'collection', 'seqNumber'] },
     { fields: ['number', 'hero', 'seqNumber', 'title'] },
     { fields: ['hero', 'collection', 'seqNumber', 'title'] },
@@ -86,10 +97,10 @@ export class ComicService {
     this.storageService.loadData();
   }
 
-  getPublishers(path: string):Observable<PublisherResolved[]> {
-    console.log('getPublishers initiated.');
+  getPublishers(path: string, useCache: boolean = true):Observable<PublisherResolved[]> {
+    console.log('getPublishers initiated. (path: ', path, ')');
 
-    if (this.storageService.isPublishersCached()) {
+    if (useCache && this.storageService.isPublishersCached() ) {
       return of(this.resolvePublishers(this.storageService.localData.publishers));
     }
 
@@ -106,10 +117,10 @@ export class ComicService {
     );
   }
 
-  getComics(path: string, publisher: string):Observable<ComicResolved[]> {
-    console.log('getComics initiated.');
+  getComics(path: string, publisher: string, useCache: boolean = true):Observable<ComicResolved[]> {
+    console.log('getComics initiated. Path: (', path, '), Publisher: ', publisher, ')');
 
-    if (this.storageService.isComicDataCached(publisher)) {
+    if (useCache && this.storageService.isComicDataCached(publisher)) {
       return of(this.resolveComics(this.storageService.localData.comics[publisher], path));
     }
 

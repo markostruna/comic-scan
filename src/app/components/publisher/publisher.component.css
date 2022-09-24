@@ -39,12 +39,14 @@
   width: 150px;
   /* height:110px; */
   padding: 2px;
-  /* background-color: rgba(0, 0, 0, 0.4); */
+  background-color: rgba(255, 255, 255, 0.1);
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: normal;
   word-break: normal;
   color: white;
+  height: 110px;
+  overflow: hidden;
 }
 
 .comicinfo-missing {
@@ -56,12 +58,13 @@
   /* width: 196px; */
   background-color: rgba(128, 255, 0, 0.8);
   color: black;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   /* background: rgba(0, 105, 0, 0.8);
   color: white; */
   text-align: center;
   font-size: 12px;
-  line-height: 14px;
+  /* line-height: 14px; */
+  /* transform: rotate(-45deg) translate(-35px, 0px); */
 }
 
 .comic-missing {
@@ -76,7 +79,6 @@
 }
 
 .number-circle {
-  float: right;
   background-color: steelblue;
   color: black;
   border-radius: 5px;
@@ -90,7 +92,6 @@
 }
 
 .number-circle2 {
-  float: right;
   background-color: yellow;
   color: black;
   border-radius: 5px;

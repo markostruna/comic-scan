@@ -1,20 +1,26 @@
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
+<div class="toolbar" role="banner" fxLayout="row" fxLayoutAlign="space-between center">
 
-  <mat-icon routerLink="" class="icon">
-    home
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon routerLink="" class="icon">
+      home
+    </mat-icon>
+
+    <mat-icon routerLink="/search" class="icon">
+      search
+    </mat-icon>
+
+    {{ title }}
+
+    <ng-container *ngIf="publisher">
+      / {{ publisher }}
+    </ng-container>
+  </div>
+
+  <mat-icon class="icon" (click)="refresh()">
+    refresh
   </mat-icon>
-
-  <mat-icon routerLink="/search" class="icon">
-    search
-  </mat-icon>
-
-  {{ title }}
-
-  <ng-container *ngIf="publisher">
-    / {{ publisher }}
-  </ng-container>
 
 </div>
 

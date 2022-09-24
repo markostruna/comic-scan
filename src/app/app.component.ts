@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PublisherComponent } from './components/publisher/publisher.component';
 import { PublishersComponent } from './components/publishers/publishers.component';
+import { ComicService } from './_services/comic.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,12 @@ import { PublishersComponent } from './components/publishers/publishers.componen
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+  publishersComp!: PublishersComponent;
+  publisherComp!: PublisherComponent;
+
+  comp!: PublisherComponent | PublishersComponent;
 
   title = 'Comic collection';
   value = 'Clear me';
@@ -17,9 +23,13 @@ export class AppComponent implements OnInit {
 
   subscriptions: Subscription[] = [];
 
-  constructor(public cdr: ChangeDetectorRef) {}
+  constructor(public cdr: ChangeDetectorRef, private comicService: ComicService) {}
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   subscribeToEvent(component: any) {
@@ -30,6 +40,8 @@ export class AppComponent implements OnInit {
       // this.subscriptions.push(child.submitter.subscribe((publisher: string) => {
         this.publisher = undefined;
       // }));
+
+      this.comp = component;
       this.cdr.detectChanges();
 
       return;
@@ -42,6 +54,7 @@ export class AppComponent implements OnInit {
         this.publisher = publisher;
       }));
 
+      this.comp = component;
       this.cdr.detectChanges();
 
       return;
@@ -53,5 +66,20 @@ export class AppComponent implements OnInit {
     this.subscriptions.forEach((sub) => {
       sub.unsubscribe();
     })
+  }
+
+  loadData(): void {
+    this.comicService.getPublishers('Publishers/', false).subscribe((data) => {
+      const publishers = data;
+
+      publishers.forEach((publisher) => {
+        this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
+        })
+      })
+    })
+  }
+
+  refresh () {
+    this.loadData();
   }
 }
