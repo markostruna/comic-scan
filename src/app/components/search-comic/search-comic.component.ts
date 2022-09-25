@@ -21,9 +21,10 @@ export class SearchComicComponent implements OnInit {
   @ViewChild('searchResults')
   searchResults!: PublisherComponent;
 
-  publishers: string[] = [];
-  heroes: string[] = [];
-  collections: string[]= [];
+  publishers: string[] = [''];
+  heroes: string[] = [''];
+  collections: string[] = [''];
+
   comics: ComicResolved[] = [];
   allComics: ComicResolved[] = [];
 
@@ -31,7 +32,8 @@ export class SearchComicComponent implements OnInit {
     hero: [''],
     title: [''],
     publisher: [''],
-    collection: ['']
+    collection: [''],
+    availibility: ['All']
   });
 
   constructor(private comicService: ComicService, private fb: FormBuilder) { }
@@ -46,6 +48,7 @@ export class SearchComicComponent implements OnInit {
 
       publishers.forEach((publisher) => {
         this.publishers = this.publishers.concat(publisher.name);
+        this.publishers = this.publishers.sort();
 
         this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
           this.allComics = this.allComics.concat(data);
@@ -54,14 +57,17 @@ export class SearchComicComponent implements OnInit {
 
             if (comic.hero != null && !this.heroes.includes(comic.hero)) {
               this.heroes.push(comic.hero);
+              this.heroes = this.heroes.sort();
             }
 
             if (comic.hero2 != null && !this.heroes.includes(comic.hero2)) {
               this.heroes.push(comic.hero2);
+              this.heroes = this.heroes.sort();
             }
 
             if (comic.collection != null && !this.collections.includes(comic.collection)) {
               this.collections.push(comic.collection);
+              this.collections = this.collections.sort();
             }
 
           })
@@ -77,6 +83,7 @@ export class SearchComicComponent implements OnInit {
     const selectedHero = (this.form.get('hero')?.value ?? '').toLowerCase();
     const selectedPublisher = (this.form.get('publisher')?.value ?? '').toLowerCase();
     const selectedCollection = (this.form.get('collection')?.value ?? '').toLowerCase();
+    const selectedAvailibility = (this.form.get('availibility')?.value ?? 'All').toLowerCase();
 
     this.allComics.forEach((comic) => {
 
@@ -96,6 +103,14 @@ export class SearchComicComponent implements OnInit {
 
       const collection = comic.collection ?? '';
       if (collection?.toLowerCase()?.indexOf(selectedCollection) < 0) {
+        return;
+      }
+
+      if (selectedAvailibility === 'available' && comic.missing === true) {
+        return;
+      }
+
+      if (selectedAvailibility === 'missing' && comic.missing !== true) {
         return;
       }
 
