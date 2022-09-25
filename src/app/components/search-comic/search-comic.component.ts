@@ -21,16 +21,53 @@ export class SearchComicComponent implements OnInit {
   @ViewChild('searchResults')
   searchResults!: PublisherComponent;
 
+  publishers: string[] = [];
+  heroes: string[] = [];
+  collections: string[]= [];
   comics: ComicResolved[] = [];
+  allComics: ComicResolved[] = [];
 
   form = this.fb.group({
     hero: [''],
     title: [''],
+    publisher: [''],
+    collection: ['']
   });
 
   constructor(private comicService: ComicService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
+    this.comicService.getPublishers('Publishers/', false).subscribe((data) => {
+      const publishers = data;
+
+      publishers.forEach((publisher) => {
+        this.publishers = this.publishers.concat(publisher.name);
+
+        this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
+          this.allComics = this.allComics.concat(data);
+
+          data.forEach((comic) => {
+
+            if (comic.hero != null && !this.heroes.includes(comic.hero)) {
+              this.heroes.push(comic.hero);
+            }
+
+            if (comic.hero2 != null && !this.heroes.includes(comic.hero2)) {
+              this.heroes.push(comic.hero2);
+            }
+
+            if (comic.collection != null && !this.collections.includes(comic.collection)) {
+              this.collections.push(comic.collection);
+            }
+
+          })
+        })
+      })
+    })
   }
 
   searchComics() {
@@ -38,32 +75,64 @@ export class SearchComicComponent implements OnInit {
 
     const selectedTitle = (this.form.get('title')?.value ?? '').toLowerCase();
     const selectedHero = (this.form.get('hero')?.value ?? '').toLowerCase();
+    const selectedPublisher = (this.form.get('publisher')?.value ?? '').toLowerCase();
+    const selectedCollection = (this.form.get('collection')?.value ?? '').toLowerCase();
 
-    this.comicService.getPublishers('Publishers/', false).subscribe((data) => {
+    this.allComics.forEach((comic) => {
 
-      const publishers = data;
+      const hero2 = comic.hero2 ?? '';
+      if (comic.hero.toLowerCase().indexOf(selectedHero) < 0 && hero2.toLowerCase().indexOf(selectedHero) < 0) {
+        return;
+      }
 
-      publishers.forEach((publisher) => {
-        this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
+      const title2 = comic.title2 ?? '';
+      if (comic.title.toLowerCase().indexOf(selectedTitle) < 0 && title2.toLowerCase().indexOf(selectedTitle) < 0) {
+        return;
+      }
 
-          data.forEach((comic) => {
+      if (comic.publisher.toLowerCase().indexOf(selectedPublisher) < 0) {
+        return;
+      }
 
-            const hero2 = comic.hero2 ?? '';
-            if (comic.hero.toLowerCase().indexOf(selectedHero) < 0 && hero2.toLowerCase().indexOf(selectedHero) < 0) {
-              return;
-            }
+      const collection = comic.collection ?? '';
+      if (collection?.toLowerCase()?.indexOf(selectedCollection) < 0) {
+        return;
+      }
 
-            const title2 = comic.title2 ?? '';
-            if (comic.title.toLowerCase().indexOf(selectedTitle) < 0 && title2.toLowerCase().indexOf(selectedTitle) < 0) {
-              return;
-            }
+      this.comics.push(comic);
+    });
 
-            this.comics = this.comics.concat(comic);
-          })
-          this.searchResults.displayComics();
+    this.searchResults.displayComics();
 
-        })
-      })
-    })
+    // this.comicService.getPublishers('Publishers/', false).subscribe((data) => {
+
+    //   const publishers = data;
+
+    //   publishers.forEach((publisher) => {
+    //     this.comicService.getComics('Publishers/' + publisher.name + '/', publisher.name, false).subscribe((data) => {
+
+    //       data.forEach((comic) => {
+
+    //         const hero2 = comic.hero2 ?? '';
+    //         if (comic.hero.toLowerCase().indexOf(selectedHero) < 0 && hero2.toLowerCase().indexOf(selectedHero) < 0) {
+    //           return;
+    //         }
+
+    //         const title2 = comic.title2 ?? '';
+    //         if (comic.title.toLowerCase().indexOf(selectedTitle) < 0 && title2.toLowerCase().indexOf(selectedTitle) < 0) {
+    //           return;
+    //         }
+
+    //         if (comic.publisher.toLowerCase().indexOf(selectedPublisher) < 0) {
+    //           return;
+    //         }
+
+    //         this.comics = this.comics.concat(comic);
+    //       })
+    //       this.searchResults.displayComics();
+
+    //     })
+    //   })
+    // })
   }
 }

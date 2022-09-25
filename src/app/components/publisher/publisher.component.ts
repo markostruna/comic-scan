@@ -29,7 +29,7 @@ export class PublisherComponent implements OnInit {
   comicsPath = '';
   publisher = '';
 
-  pageSize = 100;
+  pageSize = 120;
 
   numPreloadedComics = this.pageSize;
 

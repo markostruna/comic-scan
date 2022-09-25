@@ -1,10 +1,6 @@
 
 <div class="page" fxLayout="column" fxLayoutAlign="start center">
 
-  <div class="title">
-    Find the comic
-  </div>
-
   <div class="search-form">
 
     <div fxLayout="row wrap" [formGroup]="form">
@@ -21,7 +17,11 @@
       <div class="search-field" fxLayout="column">
         <mat-label class="search-label">Hero</mat-label>
         <mat-form-field class="form-field-wrapper" appearance="outline">
-          <input matInput placeholder="Hero"  formControlName="hero" autocomplete="off">
+          <mat-select formControlName="hero">
+            <mat-option *ngFor="let hero of heroes" [value]="hero">
+              {{hero}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -29,7 +29,11 @@
       <div class="search-field" fxLayout="column">
         <mat-label class="search-label">Publisher</mat-label>
         <mat-form-field class="form-field-wrapper" appearance="outline">
-          <input matInput placeholder="Publisher" value="" autocomplete="off">
+          <mat-select formControlName="publisher">
+            <mat-option *ngFor="let publisher of publishers" [value]="publisher">
+              {{publisher}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
@@ -37,7 +41,11 @@
       <div class="search-field" fxLayout="column">
         <mat-label class="search-label">Collection</mat-label>
         <mat-form-field class="form-field-wrapper" appearance="outline">
-          <input matInput placeholder="Collection" value="" autocomplete="off">
+          <mat-select formControlName="collection">
+            <mat-option *ngFor="let collection of collections" [value]="collection">
+              {{collection}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
