@@ -7,11 +7,12 @@
     "build": "ng build",
     "prod": "ng build --prod --aot --output-hashing none --baseHref=\"/comic2/\"",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "eslint -c .eslintrc.js --ext .ts src",
     "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
+    "@angular-eslint/template-parser": "^14.1.2",
     "@angular/animations": "^14.2.3",
     "@angular/cdk": "^14.2.2",
     "@angular/common": "^14.2.3",
@@ -30,12 +31,24 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.3",
+    "@angular-eslint/builder": "14.1.2",
+    "@angular-eslint/eslint-plugin": "14.1.2",
+    "@angular-eslint/eslint-plugin-template": "14.1.2",
+    "@angular-eslint/schematics": "14.1.2",
+    "@angular-eslint/template-parser": "14.1.2",
     "@angular/cli": "^14.2.3",
     "@angular/compiler-cli": "^14.2.3",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.38.1",
+    "@typescript-eslint/parser": "5.37.0",
     "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.6.0",
+    "eslint": "^8.23.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.6",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "jasmine-core": "^4.4.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.4.1",
     "karma-chrome-launcher": "~3.1.0",
@@ -44,7 +57,6 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
     "typescript": "^4.8.3"
   }
 }
