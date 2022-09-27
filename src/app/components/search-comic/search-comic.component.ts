@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ComicResolved } from 'src/app/_models/comic-resolved.model';
 import { ComicService } from 'src/app/_services/comic.service';
 import { PublisherComponent } from '../publisher/publisher.component';
@@ -36,7 +36,7 @@ export class SearchComicComponent implements OnInit {
     availibility: ['All']
   });
 
-  constructor(private comicService: ComicService, private fb: FormBuilder) { }
+  constructor(private comicService: ComicService, private fb: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.loadData();
