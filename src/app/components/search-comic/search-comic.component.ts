@@ -33,7 +33,7 @@ export class SearchComicComponent implements OnInit {
     title: [''],
     publisher: [''],
     collection: [''],
-    availibility: ['All']
+    availability: ['All']
   });
 
   constructor(private comicService: ComicService, private fb: UntypedFormBuilder) { }
@@ -83,7 +83,7 @@ export class SearchComicComponent implements OnInit {
     const selectedHero = (this.form.get('hero')?.value ?? '').toLowerCase();
     const selectedPublisher = (this.form.get('publisher')?.value ?? '').toLowerCase();
     const selectedCollection = (this.form.get('collection')?.value ?? '').toLowerCase();
-    const selectedAvailibility = (this.form.get('availibility')?.value ?? 'All').toLowerCase();
+    const selectedAvailability = (this.form.get('availability')?.value ?? 'All').toLowerCase();
 
     this.allComics.forEach((comic) => {
 
@@ -106,11 +106,11 @@ export class SearchComicComponent implements OnInit {
         return;
       }
 
-      if (selectedAvailibility === 'available' && comic.missing === true) {
+      if (selectedAvailability === 'available' && comic.missing === true) {
         return;
       }
 
-      if (selectedAvailibility === 'missing' && comic.missing !== true) {
+      if (selectedAvailability === 'missing' && comic.missing !== true) {
         return;
       }
 
